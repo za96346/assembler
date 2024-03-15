@@ -1,0 +1,16 @@
+Intel-8051 Macro Assembler - Version 1.00
+
+      1    0000                           	ORG 000H
+      2    0000     75 80 00              LOOP: MOV P0, #00000000B
+      3    0003     11 0C                 	ACALL DELAY
+      4    0005     75 80 FF              	MOV P0,  #11111111B
+      5    0008     11 0C                 	ACALL DELAY
+      6    000A     01 00                 	AJMP LOOP
+      7    000C                           
+      8    000C     7E FA                 DELAY: MOV R6,#250
+      9    000E     7F C8                 DL1: MOV R7,#200
+     10    0010     DF FE                 DL2: DJNZ R7,DL2
+     11    0012     DE FA                 	DJNZ R6,DL1
+     12    0014     22                    	RET
+     13    0015                           ;
+     14    0015                           END
