@@ -1,0 +1,119 @@
+	ORG 	0000H
+START:	MOV 	R0,	#OK - TABLE + 1
+		MOV 	DPTR, 	#TABLE
+		MOV		R1,	#00H
+
+LOOP:	MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY3S
+		INC		R1
+
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY3S
+		INC		R1
+
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        MOV		A, 	R1
+		MOVC 	A, @A+DPTR
+		MOV		P0,	A
+		ACALL	DELAY0_1S
+		INC		R1
+        
+
+		DJNZ	R0, LOOP
+		AJMP	START
+
+DELAY0_1S:	MOV		R5, #3
+DL0_1_1:	MOV		R6, #250
+DL0_1_2:	MOV		R7,	#200
+DL0_1_3:	DJNZ 	R7, DL0_1_3
+		    DJNZ	R6, DL0_1_2
+		    DJNZ	R5, DL0_1_1
+		    RET
+
+DELAY3S:	MOV		R5, #30
+DL1:	MOV		R6, #250
+DL2:	MOV		R7,	#200
+DL3:	DJNZ 	R7, DL3
+		DJNZ	R6, DL2
+		DJNZ	R5, DL1
+		RET
+
+TABLE:	DB		00100100B
+		DB		01000100B
+
+		DB		00000100B
+        DB		01000100B
+		DB		00000100B
+        DB		01000100B
+        DB		00000100B
+        DB		01000100B
+
+        DB		10000001B
+        DB		10000010B
+        
+        DB		10000000B
+        DB		10000010B
+        DB		10000000B
+        DB		10000010B
+        DB		10000000B
+OK;     DB		10000010B
+		END
