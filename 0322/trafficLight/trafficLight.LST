@@ -1,121 +1,83 @@
 Intel-8051 Macro Assembler - Version 1.00
 
-      1    0000                           	ORG 	0000H
-      2    0000     78 96                 START:	MOV 	R0,	#OK - TABLE + 1
-      3    0002     90 00 87              		MOV 	DPTR, 	#TABLE
-      4    0005     79 00                 		MOV		R1,	#00H
+      1    0000                           	ORG	0000H
+      2    0000     78 35                 START:	MOV	R0,#OK-TABLE+1
+      3    0002     90 00 1F              		MOV	DPTR,#TABLE
+      4    0005     79 00                 		MOV	R1,#00H
       5    0007                           
-      6    0007     E9                    LOOP:	MOV		A, 	R1
-      7    0008     93                    		MOVC 	A, @A+DPTR
-      8    0009     F5 80                 		MOV		P0,	A
-      9    000B     11 7A                 		ACALL	DELAY3S
-     10    000D     09                    		INC		R1
-     11    000E                           
-     12    000E     E9                            MOV		A, 	R1
-     13    000F     93                    		MOVC 	A, @A+DPTR
-     14    0010     F5 80                 		MOV		P0,	A
-     15    0012     11 6D                 		ACALL	DELAY0_1S
-     16    0014     09                    		INC		R1
-     17    0015     E9                            MOV		A, 	R1
-     18    0016     93                    		MOVC 	A, @A+DPTR
-     19    0017     F5 80                 		MOV		P0,	A
-     20    0019     11 6D                 		ACALL	DELAY0_1S
-     21    001B     09                    		INC		R1
-     22    001C     E9                            MOV		A, 	R1
-     23    001D     93                    		MOVC 	A, @A+DPTR
-     24    001E     F5 80                 		MOV		P0,	A
-     25    0020     11 6D                 		ACALL	DELAY0_1S
-     26    0022     09                    		INC		R1
-     27    0023     E9                            MOV		A, 	R1
-     28    0024     93                    		MOVC 	A, @A+DPTR
-     29    0025     F5 80                 		MOV		P0,	A
-     30    0027     11 6D                 		ACALL	DELAY0_1S
-     31    0029     09                    		INC		R1
-     32    002A     E9                            MOV		A, 	R1
-     33    002B     93                    		MOVC 	A, @A+DPTR
-     34    002C     F5 80                 		MOV		P0,	A
-     35    002E     11 6D                 		ACALL	DELAY0_1S
-     36    0030     09                    		INC		R1
-     37    0031     E9                            MOV		A, 	R1
-     38    0032     93                    		MOVC 	A, @A+DPTR
-     39    0033     F5 80                 		MOV		P0,	A
-     40    0035     11 6D                 		ACALL	DELAY0_1S
-     41    0037     09                    		INC		R1
-     42    0038                           
-     43    0038     E9                            MOV		A, 	R1
-     44    0039     93                    		MOVC 	A, @A+DPTR
-     45    003A     F5 80                 		MOV		P0,	A
-     46    003C     11 7A                 		ACALL	DELAY3S
-     47    003E     09                    		INC		R1
-     48    003F                           
-     49    003F     E9                            MOV		A, 	R1
-     50    0040     93                    		MOVC 	A, @A+DPTR
-     51    0041     F5 80                 		MOV		P0,	A
-     52    0043     11 6D                 		ACALL	DELAY0_1S
-     53    0045     09                    		INC		R1
-     54    0046     E9                            MOV		A, 	R1
-     55    0047     93                    		MOVC 	A, @A+DPTR
-     56    0048     F5 80                 		MOV		P0,	A
-     57    004A     11 6D                 		ACALL	DELAY0_1S
-     58    004C     09                    		INC		R1
-     59    004D     E9                            MOV		A, 	R1
-     60    004E     93                    		MOVC 	A, @A+DPTR
-     61    004F     F5 80                 		MOV		P0,	A
-     62    0051     11 6D                 		ACALL	DELAY0_1S
-     63    0053     09                    		INC		R1
-     64    0054     E9                            MOV		A, 	R1
-     65    0055     93                    		MOVC 	A, @A+DPTR
-     66    0056     F5 80                 		MOV		P0,	A
-     67    0058     11 6D                 		ACALL	DELAY0_1S
-     68    005A     09                    		INC		R1
-     69    005B     E9                            MOV		A, 	R1
-     70    005C     93                    		MOVC 	A, @A+DPTR
-     71    005D     F5 80                 		MOV		P0,	A
-     72    005F     11 6D                 		ACALL	DELAY0_1S
-     73    0061     09                    		INC		R1
-     74    0062     E9                            MOV		A, 	R1
-     75    0063     93                    		MOVC 	A, @A+DPTR
-     76    0064     F5 80                 		MOV		P0,	A
-     77    0066     11 6D                 		ACALL	DELAY0_1S
-     78    0068     09                    		INC		R1
-     79    0069                                   
-     80    0069                           
-     81    0069     D8 9C                 		DJNZ	R0, LOOP
-     82    006B     01 00                 		AJMP	START
-     83    006D                           
-     84    006D     7D 03                 DELAY0_1S:	MOV		R5, #3
-     85    006F     7E FA                 DL0_1_1:	MOV		R6, #250
-     86    0071     7F C8                 DL0_1_2:	MOV		R7,	#200
-     87    0073     DF FE                 DL0_1_3:	DJNZ 	R7, DL0_1_3
-     88    0075     DE FA                 		    DJNZ	R6, DL0_1_2
-     89    0077     DD F6                 		    DJNZ	R5, DL0_1_1
-     90    0079     22                    		    RET
-     91    007A                           
-     92    007A     7D 1E                 DELAY3S:	MOV		R5, #30
-     93    007C     7E FA                 DL1:	MOV		R6, #250
-     94    007E     7F C8                 DL2:	MOV		R7,	#200
-     95    0080     DF FE                 DL3:	DJNZ 	R7, DL3
-     96    0082     DE FA                 		DJNZ	R6, DL2
-     97    0084     DD F6                 		DJNZ	R5, DL1
-     98    0086     22                    		RET
-     99    0087                           
-    100    0087     24                    TABLE:	DB		00100100B
-    101    0088     44                    		DB		01000100B
-    102    0089                           
-    103    0089     04                    		DB		00000100B
-    104    008A     44                            DB		01000100B
-    105    008B     04                    		DB		00000100B
-    106    008C     44                            DB		01000100B
-    107    008D     04                            DB		00000100B
-    108    008E     44                            DB		01000100B
-    109    008F                           
-    110    008F     81                            DB		10000001B
-    111    0090     82                            DB		10000010B
-    112    0091                                   
-    113    0091     80                            DB		10000000B
-    114    0092     82                            DB		10000010B
-    115    0093     80                            DB		10000000B
-    116    0094     82                            DB		10000010B
-    117    0095     80                            DB		10000000B
-    118    0096                           OK;     DB		10000010B
-    119    0096                           		END
+      6    0007     E9                    LOOP:	MOV	A,R1
+      7    0008     93                    		MOVC	A,@A+DPTR
+      8    0009     F5 80                 		MOV	P0,A
+      9    000B     11 12                 		ACALL	DELAY
+     10    000D     09                    		INC	R1
+     11    000E     D8 F7                 		DJNZ	R0,LOOP
+     12    0010     01 00                 		AJMP	START
+     13    0012                           
+     14    0012     7D 01                 DELAY:	MOV	R5,#1
+     15    0014     7E FA                 DL1:	MOV	R6,#250
+     16    0016     7F C8                 DL2:	MOV	R7,#200
+     17    0018     DF FE                 DL3:	DJNZ	R7,DL3
+     18    001A     DE FA                 		DJNZ	R6,DL2
+     19    001C     DD F6                 		DJNZ	R5,DL1
+     20    001E     22                    		RET
+     21    001F                           
+     22    001F                           
+     23    001F     84                    TABLE:	DB	10000100B
+     24    0020     84                    		DB	10000100B
+     25    0021     84                    		DB	10000100B
+     26    0022     84                    		DB	10000100B
+     27    0023     84                    		DB	10000100B
+     28    0024     84                    		DB	10000100B
+     29    0025     84                    		DB	10000100B
+     30    0026     84                    		DB	10000100B
+     31    0027     84                    		DB	10000100B
+     32    0028     84                    		DB	10000100B
+     33    0029     84                    		DB	10000100B
+     34    002A     84                    		DB	10000100B
+     35    002B     84                    		DB	10000100B
+     36    002C     84                    		DB	10000100B
+     37    002D     84                    		DB	10000100B
+     38    002E     84                    		DB	10000100B
+     39    002F     84                    		DB	10000100B
+     40    0030     84                    		DB	10000100B
+     41    0031     84                    		DB	10000100B
+     42    0032     84                    		DB	10000100B
+     43    0033                           
+     44    0033     88                    		DB	10001000B
+     45    0034     80                    		DB	10000000B
+     46    0035     88                    		DB	10001000B
+     47    0036     80                    		DB	10000000B
+     48    0037     88                    		DB	10001000B
+     49    0038     80                    		DB	10000000B
+     50    0039                           
+     51    0039     30                    		DB	00110000B
+     52    003A     30                    		DB	00110000B
+     53    003B     30                    		DB	00110000B
+     54    003C     30                    		DB	00110000B
+     55    003D     30                    		DB	00110000B
+     56    003E     30                    		DB	00110000B
+     57    003F     30                    		DB	00110000B
+     58    0040     30                    		DB	00110000B
+     59    0041     30                    		DB	00110000B
+     60    0042     30                    		DB	00110000B
+     61    0043     30                    		DB	00110000B
+     62    0044     30                    		DB	00110000B
+     63    0045     30                    		DB	00110000B
+     64    0046     30                    		DB	00110000B
+     65    0047     30                    		DB	00110000B
+     66    0048     30                    		DB	00110000B
+     67    0049     30                    		DB	00110000B
+     68    004A     30                    		DB	00110000B
+     69    004B     30                    		DB	00110000B
+     70    004C     30                    		DB	00110000B
+     71    004D                           
+     72    004D     50                    		DB	01010000B
+     73    004E     10                    		DB	00010000B
+     74    004F     50                    		DB	01010000B
+     75    0050     10                    		DB	00010000B
+     76    0051     50                    		DB	01010000B
+     77    0052     10                    		DB	00010000B
+     78    0053                           
+     79    0053     00                    OK:	DB	00000000B
+     80    0054                           
+     81    0054                           	END
