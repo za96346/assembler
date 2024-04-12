@@ -1,0 +1,59 @@
+Intel-8051 Macro Assembler - Version 1.00
+
+      1    0000                               ORG     0000H
+      2    0000     75 90 FE              TEST:   MOV P1, #11111110B
+      3    0003     30 A0 26                      JNB P2.0, SOL
+      4    0006     30 A1 27                      JNB P2.1, LAL
+      5    0009     30 A2 28                      JNB P2.2, SIL
+      6    000C     30 A3 29                      JNB P2.3, DO
+      7    000F                           
+      8    000F     75 90 FD                      MOV P1, #11111101B
+      9    0012     30 A0 27                      JNB P2.0, RE
+     10    0015     30 A1 28                      JNB P2.1, MI
+     11    0018     30 A2 29                      JNB P2.2, FA
+     12    001B     30 A3 2A                      JNB P2.3, SO
+     13    001E                           
+     14    001E     75 90 FB                      MOV P1, #11111011B
+     15    0021     30 A0 28                      JNB P2.0, LA
+     16    0024     30 A1 29                      JNB P2.1, SI
+     17    0027     30 A2 2A                      JNB P2.2, DOH
+     18    002A                           
+     19    002A     01 00                         AJMP  TEST
+     20    002C                           
+     21    002C     7E AA                 SOL:    MOV   R6, #170
+     22    002E     01 58                         AJMP  OUTPUT
+     23    0030     7E 96                 LAL:    MOV   R6, #150
+     24    0032     01 58                         AJMP  OUTPUT
+     25    0034     7E 86                 SIL:    MOV   R6, #134
+     26    0036     01 58                         AJMP  OUTPUT
+     27    0038     7E 7E                 DO:     MOV   R6, #126
+     28    003A     01 58                         AJMP  OUTPUT
+     29    003C     7E 71                 RE:     MOV   R6, #113
+     30    003E     01 58                         AJMP  OUTPUT
+     31    0040     7E 64                 MI:     MOV   R6, #100
+     32    0042     01 58                         AJMP  OUTPUT
+     33    0044     7E 5F                 FA:     MOV   R6, #95
+     34    0046     01 58                         AJMP  OUTPUT
+     35    0048     7E 55                 SO:     MOV   R6, #85
+     36    004A     01 58                         AJMP  OUTPUT
+     37    004C     7E 4B                 LA:     MOV   R6, #75
+     38    004E     01 58                         AJMP  OUTPUT
+     39    0050     7E 43                 SI:     MOV   R6, #67
+     40    0052     01 58                         AJMP  OUTPUT
+     41    0054     7E 3F                 DOH:    MOV   R6, #63
+     42    0056     01 58                         AJMP  OUTPUT
+     43    0058                           
+     44    0058     C2 A6                 OUTPUT: CLR P2.6
+     45    005A     11 62                         ACALL DELAY
+     46    005C     D2 A6                         SETB P2.6
+     47    005E     11 62                         ACALL DELAY
+     48    0060     01 00                         AJMP TEST
+     49    0062                           
+     50    0062     8E F0                 DELAY:  MOV B, R6
+     51    0064     7F 06                 DL:     MOV R7, #6
+     52    0066     DF FE                         DJNZ R7, $
+     53    0068     DE FA                         DJNZ R6, DL
+     54    006A     AE F0                         MOV  R6, B
+     55    006C     22                            RET
+     56    006D                           ;
+     57    006D                                   END
