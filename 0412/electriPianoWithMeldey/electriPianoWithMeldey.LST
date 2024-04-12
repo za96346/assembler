@@ -1,0 +1,171 @@
+Intel-8051 Macro Assembler - Version 1.00
+
+      1    0000                               ORG 0000H
+      2    0000     90 01 35              START:  MOV     DPTR, #MUSIC; DPTR
+      3    0003     E4                    CONT:   CLR     A
+      4    0004     93                            MOVC    A, @A+DPTR
+      5    0005     B4 28 02                      CJNE    A, #40,CHK
+      6    0008     01 00                         AJMP    START
+      7    000A     B4 FF 02              CHK:    CJNE    A, #255, OK
+      8    000D     01 0D                 STOP:   AJMP    STOP
+      9    000F     C0 E0                 OK:     PUSH    ACC
+     10    0011     A3                            INC     DPTR
+     11    0012     E4                            CLR     A
+     12    0013     93                            MOVC    A,@A+DPTR
+     13    0014     FC                            MOV     R4, A
+     14    0015     D0 E0                         POP     ACC
+     15    0017                           
+     16    0017     B4 01 02              CHK1:   CJNE    A, #01, CHK2
+     17    001A     11 88                         ACALL   DOL
+     18    001C     B4 02 02              CHK2:   CJNE    A, #02, CHK3
+     19    001F     11 8E                         ACALL   REL
+     20    0021     B4 03 02              CHK3:   CJNE    A, #03, CHK4
+     21    0024     11 94                         ACALL   MIL
+     22    0026     B4 04 02              CHK4:   CJNE    A, #04, CHK5
+     23    0029     11 9A                         ACALL   FAL
+     24    002B     B4 05 02              CHK5:   CJNE    A, #05, CHK6
+     25    002E     11 A0                         ACALL   SOL
+     26    0030     B4 06 02              CHK6:   CJNE    A, #06, CHK7
+     27    0033     11 A6                         ACALL   LAL
+     28    0035     B4 07 02              CHK7:   CJNE    A, #07, CHK11
+     29    0038     11 AC                         ACALL   SIL
+     30    003A     B4 0B 02              CHK11:   CJNE    A, #011, CHK12
+     31    003D     11 B2                         ACALL   DO
+     32    003F     B4 0C 02              CHK12:   CJNE    A, #12, CHK13
+     33    0042     11 B8                         ACALL   RE
+     34    0044     B4 0D 02              CHK13:   CJNE    A, #13, CHK14
+     35    0047     11 BE                         ACALL   MI
+     36    0049     B4 0E 02              CHK14:   CJNE    A, #14, CHK15
+     37    004C     11 C4                         ACALL   FA
+     38    004E     B4 0F 02              CHK15:   CJNE    A, #15, CHK16
+     39    0051     11 CA                         ACALL   SO
+     40    0053     B4 10 02              CHK16:   CJNE    A, #16, CHK17
+     41    0056     11 D0                         ACALL   LA
+     42    0058     B4 11 02              CHK17:   CJNE    A, #17, CHK21
+     43    005B     11 D6                         ACALL   SI
+     44    005D     B4 15 02              CHK21:   CJNE    A, #21, CHK22
+     45    0060     11 DC                         ACALL   DOH
+     46    0062     B4 16 02              CHK22:   CJNE    A, #22, CHK23
+     47    0065     11 E2                         ACALL   REH
+     48    0067     B4 17 02              CHK23:   CJNE    A, #23, CHK24
+     49    006A     11 E8                         ACALL   MIH
+     50    006C     B4 18 02              CHK24:   CJNE    A, #24, CHK25
+     51    006F     11 EE                         ACALL   FAH
+     52    0071     B4 19 02              CHK25:   CJNE    A, #25, CHK26
+     53    0074     11 F4                         ACALL   SOH
+     54    0076     B4 1A 02              CHK26:   CJNE    A, #26, CHK27
+     55    0079     11 FA                         ACALL   LAH
+     56    007B     B4 1B 02              CHK27:   CJNE    A, #27, CHK0
+     57    007E     31 00                         ACALL   SIH
+     58    0080     B4 00 02              CHK0:   CJNE    A, #00, CONT2
+     59    0083     31 06                         ACALL   NON
+     60    0085     A3                    CONT2:  INC     DPTR
+     61    0086     01 03                         AJMP    CONT
+     62    0088                           
+     63    0088     7E FE                 DOL:    MOV     R6, #254
+     64    008A     7D 10                         MOV     R5, #16
+     65    008C     21 0C                         AJMP    OUTPUT
+     66    008E     7E E2                 REL:    MOV     R6, #226
+     67    0090     7D 12                         MOV     R5, #18
+     68    0092     21 0C                         AJMP    OUTPUT
+     69    0094     7E C9                 MIL:    MOV     R6, #201
+     70    0096     7D 15                         MOV     R5, #21
+     71    0098     21 0C                         AJMP    OUTPUT
+     72    009A     7E BE                 FAL:    MOV     R6, #190
+     73    009C     7D 16                         MOV     R5, #22
+     74    009E     21 0C                         AJMP    OUTPUT
+     75    00A0     7E AA                 SOL:    MOV     R6, #170
+     76    00A2     7D 19                         MOV     R5, #25
+     77    00A4     21 0C                         AJMP    OUTPUT
+     78    00A6     7E 96                 LAL:    MOV     R6, #150
+     79    00A8     7D 1C                         MOV     R5, #28
+     80    00AA     21 0C                         AJMP    OUTPUT
+     81    00AC     7E 86                 SIL:    MOV     R6, #134
+     82    00AE     7D 1F                         MOV     R5, #31
+     83    00B0     21 0C                         AJMP    OUTPUT
+     84    00B2     7E 7E                 DO:     MOV     R6, #126
+     85    00B4     7D 21                         MOV     R5, #33
+     86    00B6     21 0C                         AJMP    OUTPUT
+     87    00B8     7E 71                 RE:     MOV     R6, #113
+     88    00BA     7D 25                         MOV     R5, #37
+     89    00BC     21 0C                         AJMP    OUTPUT
+     90    00BE     7E 64                 MI:     MOV     R6, #100
+     91    00C0     7D 29                         MOV     R5, #41
+     92    00C2     21 0C                         AJMP    OUTPUT
+     93    00C4     7E 5F                 FA:     MOV     R6, #95
+     94    00C6     7D 2C                         MOV     R5, #44
+     95    00C8     21 0C                         AJMP    OUTPUT
+     96    00CA     7E 55                 SO:     MOV     R6, #85
+     97    00CC     7D 31                         MOV     R5, #49
+     98    00CE     21 0C                         AJMP    OUTPUT
+     99    00D0     7E 4B                 LA:     MOV     R6, #75
+    100    00D2     7D 37                         MOV     R5, #55
+    101    00D4     21 0C                         AJMP    OUTPUT
+    102    00D6     7E 43                 SI:     MOV     R6, #67
+    103    00D8     7D 3E                         MOV     R5, #62
+    104    00DA     21 0C                         AJMP    OUTPUT
+    105    00DC     7E 3F                 DOH:     MOV     R6, #63
+    106    00DE     7D 41                         MOV     R5, #65
+    107    00E0     21 0C                         AJMP    OUTPUT
+    108    00E2     7E 38                 REH:     MOV     R6, #56
+    109    00E4     7D 49                         MOV     R5, #73
+    110    00E6     21 0C                         AJMP    OUTPUT
+    111    00E8     7E 32                 MIH:     MOV     R6, #50
+    112    00EA     7D 52                         MOV     R5, #82
+    113    00EC     21 0C                         AJMP    OUTPUT
+    114    00EE     7E 2F                 FAH:     MOV     R6, #47
+    115    00F0     7D 58                         MOV     R5, #88
+    116    00F2     21 0C                         AJMP    OUTPUT
+    117    00F4     7E 2A                 SOH:     MOV     R6, #42
+    118    00F6     7D 62                         MOV     R5, #98
+    119    00F8     21 0C                         AJMP    OUTPUT
+    120    00FA     7E 25                 LAH:     MOV     R6, #37
+    121    00FC     7D 6E                         MOV     R5, #110
+    122    00FE     21 0C                         AJMP    OUTPUT
+    123    0100     7E 21                 SIH:     MOV     R6, #33
+    124    0102     7D 7C                         MOV     R5, #124
+    125    0104     21 0C                         AJMP    OUTPUT
+    126    0106     7E 21                 NON:    MOV     R6, #33
+    127    0108     7D 7C                         MOV     R5, #124
+    128    010A     21 0C                         AJMP    OUTPUT
+    129    010C                           
+    130    010C     C0 05                 OUTPUT: PUSH    05
+    131    010E     B4 00 02              LOOP:   CJNE    A, #00, SOUND
+    132    0111     21 15                         AJMP    MUTE
+    133    0113     C2 A6                 SOUND:  CLR     P2.6
+    134    0115     31 2A                 MUTE:   ACALL   DELAY
+    135    0117     D2 A6                         SETB    P2.6
+    136    0119     31 2A                         ACALL   DELAY
+    137    011B     DD F1                         DJNZ    R5, LOOP
+    138    011D                           
+    139    011D     D0 05                         POP     05
+    140    011F     DC EB                         DJNZ    R4, OUTPUT
+    141    0121     7E AA                 REST:   MOV     R6, #170
+    142    0123     7D 14                         MOV     R5, #20
+    143    0125     31 2A                 WAIT:   ACALL    DELAY
+    144    0127     DD FC                         DJNZ    R5, WAIT
+    145    0129     22                            RET
+    146    012A                           
+    147    012A     8E F0                 DELAY:  MOV     B, R6
+    148    012C     7F 06                 DL:     MOV     R7, #6
+    149    012E     DF FE                         DJNZ    R7, $
+    150    0130     DE FA                         DJNZ    R6, DL
+    151    0132     AE F0                         MOV     R6, B
+    152    0134     22                            RET
+    153    0135                           
+    154    0135     0B 04 0B 04 0B        MUSIC:  DB  11,04,11,04,11,04
+    155    013B     0D 06 0C 02 0B                DB  13,06,12,02,11,04
+    156    0141     0D 04 0D 04 0D                DB  13,04,13,04,13,04
+    157    0147     0F 06 0E 02 0D                DB  15,06,14,02,13,04
+    158    014D     0F 04 0E 04 0D                DB  15,04,14,04,13,04
+    159    0153     0C 08 00 04                   DB  12,08,00,04
+    160    0157     0C 08 0B 02 07                DB  12,08,11,02,07,02
+    161    015D     0B 04 0C 04 0D                DB  11,04,12,04,13,04
+    162    0163     0E 08 0D 02 0C                DB  14,08,13,02,12,02
+    163    0169     0D 04 0E 04 0F                DB  13,04,14,04,15,04
+    164    016F     0F 02 0E 02 0D                DB  15,02,14,02,13,04,12,04
+    165    0177     0B 08 00 04                   DB  11,08,00,04
+    166    017B                           
+    167    017B     FF                            DB  255
+    168    017C                           
+    169    017C                                   END
