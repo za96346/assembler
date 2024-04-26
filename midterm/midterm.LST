@@ -1,0 +1,428 @@
+Intel-8051 Macro Assembler - Version 1.00
+
+      1    0000                               ORG 0000H
+      2    0000     75 90 FE              MAIN_LOOP:   MOV P1,     #11111110B
+      3    0003     30 A0 14                      JNB P2.0,   ONE_START_AJMP
+      4    0006     30 A1 13                      JNB P2.1,   TWO_START_AJMP
+      5    0009     30 A2 12                      JNB P2.2,   THREE_START_AJMP
+      6    000C     30 A3 11                      JNB p2.3    FOUR_START_AJMP
+      7    000F                           
+      8    000F     75 90 FD                      MOV P1,     #11111101B
+      9    0012     30 A0 0D                      JNB P2.0,   FIVE_START_AJMP
+     10    0015     30 A1 0C                      JNB P2.1,   SIX_START_AJMP
+     11    0018                                   ;JNB P2.2,   SEVEN_START_AJMP
+     12    0018                                   ;JNB P2.3,   EIGHT_START_AJMP
+     13    0018                           
+     14    0018                                   ;MOV P1,     #11111011B
+     15    0018                                   ;JNB P2.0,   NINE_START_AJMP
+     16    0018                           
+     17    0018     01 00                         AJMP MAIN_LOOP
+     18    001A                           
+     19    001A     01 26                 ONE_START_AJMP:     AJMP    ONE_START
+     20    001C     01 47                 TWO_START_AJMP:     AJMP    TWO_START
+     21    001E     01 9B                 THREE_START_AJMP:   AJMP    THREE_START
+     22    0020     01 C8                 FOUR_START_AJMP:    AJMP    FOUR_START
+     23    0022     21 35                 FIVE_START_AJMP:    AJMP    FIVE_START
+     24    0024     41 A1                 SIX_START_AJMP:     AJMP    SIX_START
+     25    0026                           ;SEVEN_START_AJMP:   AJMP    SEVEN_START
+     26    0026                           ;EIGHT_START_AJMP:   AJMP    EIGHT_START
+     27    0026                           ;NINE_START_AJMP:    AJMP    NINE_START
+     28    0026                           
+     29    0026                           ; one
+     30    0026     79 07                 ONE_START:      MOV 	R1,	#07H
+     31    0028     74 01                 		        MOV 	A, 	#00000001B
+     32    002A                           
+     33    002A     F5 80                 ONE_LEFT: 	    MOV 	P0, 	A
+     34    002C     11 3E                                 ACALL   ONE_DELAY
+     35    002E     23                                    RL 	    A
+     36    002F     D9 F9                                 DJNZ 	R1, 	ONE_LEFT
+     37    0031     79 07                                 MOV 	R1,  	#07H
+     38    0033     74 80                                 MOV 	A, 	    #10000000B
+     39    0035                           
+     40    0035     F5 80                 ONE_RIGHT: 	    MOV 	P0,	A
+     41    0037     11 3E                                 ACALL   ONE_DELAY
+     42    0039     03                                    RR 	    A
+     43    003A     D9 F9                                 DJNZ 	R1,	ONE_RIGHT
+     44    003C     01 26                                 AJMP 	ONE_START
+     45    003E                           
+     46    003E     7E FA                 ONE_DELAY: 	    MOV 	R6, 	#250
+     47    0040     7F C8                 ONE_DL1: 		MOV 	R7, 	#200
+     48    0042     DF FE                 ONE_DL2: 		DJNZ 	R7, 	ONE_DL2
+     49    0044     DE FA                 		        DJNZ 	R6, 	ONE_DL1
+     50    0046     22                    		        RET
+     51    0047                           
+     52    0047                           ; two
+     53    0047     78 35                 TWO_START:      MOV	    R0,	    #TWO_OK-TWO_TABLE+1
+     54    0049     90 00 66                              MOV	    DPTR,   #TWO_TABLE
+     55    004C     79 00                                 MOV	    R1,     #00H
+     56    004E                           
+     57    004E     E9                    TWO_LOOP:	    MOV	    A,      R1
+     58    004F     93                                    MOVC	A,      @A+DPTR
+     59    0050     F5 80                                 MOV	    P0,     A
+     60    0052     11 59                                 ACALL	TWO_DELAY
+     61    0054     09                                    INC	    R1
+     62    0055     D8 F7                                 DJNZ	R0,     TWO_LOOP
+     63    0057     01 47                                 AJMP	TWO_START
+     64    0059                           
+     65    0059     7D 01                 TWO_DELAY:	    MOV	    R5,     #1
+     66    005B     7E FA                 TWO_DL1:	    MOV	    R6,     #250
+     67    005D     7F C8                 TWO_DL2:	    MOV	    R7,     #200
+     68    005F     DF FE                 TWO_DL3:	    DJNZ	R7,     TWO_DL3
+     69    0061     DE FA                 		        DJNZ	R6,     TWO_DL2
+     70    0063     DD F6                 		        DJNZ	R5,     TWO_DL1
+     71    0065     22                    		        RET
+     72    0066                           
+     73    0066     84                    TWO_TABLE:	DB	10000100B
+     74    0067     84                                DB	10000100B
+     75    0068     84                                DB	10000100B
+     76    0069     84                                DB	10000100B
+     77    006A     84                                DB	10000100B
+     78    006B     84                                DB	10000100B
+     79    006C     84                                DB	10000100B
+     80    006D     84                                DB	10000100B
+     81    006E     84                                DB	10000100B
+     82    006F     84                                DB	10000100B
+     83    0070     84                                DB	10000100B
+     84    0071     84                                DB	10000100B
+     85    0072     84                                DB	10000100B
+     86    0073     84                                DB	10000100B
+     87    0074     84                                DB	10000100B
+     88    0075     84                                DB	10000100B
+     89    0076     84                                DB	10000100B
+     90    0077     84                                DB	10000100B
+     91    0078     84                                DB	10000100B
+     92    0079     84                                DB	10000100B
+     93    007A                           
+     94    007A     88                                DB	10001000B
+     95    007B     80                                DB	10000000B
+     96    007C     88                                DB	10001000B
+     97    007D     80                                DB	10000000B
+     98    007E     88                                DB	10001000B
+     99    007F     80                                DB	10000000B
+    100    0080                           
+    101    0080     30                                DB	00110000B
+    102    0081     30                                DB	00110000B
+    103    0082     30                                DB	00110000B
+    104    0083     30                                DB	00110000B
+    105    0084     30                                DB	00110000B
+    106    0085     30                                DB	00110000B
+    107    0086     30                                DB	00110000B
+    108    0087     30                                DB	00110000B
+    109    0088     30                                DB	00110000B
+    110    0089     30                                DB	00110000B
+    111    008A     30                                DB	00110000B
+    112    008B     30                                DB	00110000B
+    113    008C     30                                DB	00110000B
+    114    008D     30                                DB	00110000B
+    115    008E     30                                DB	00110000B
+    116    008F     30                                DB	00110000B
+    117    0090     30                                DB	00110000B
+    118    0091     30                                DB	00110000B
+    119    0092     30                                DB	00110000B
+    120    0093     30                                DB	00110000B
+    121    0094                           
+    122    0094     50                                DB	01010000B
+    123    0095     10                                DB	00010000B
+    124    0096     50                                DB	01010000B
+    125    0097     10                                DB	00010000B
+    126    0098     50                                DB	01010000B
+    127    0099     10                                DB	00010000B
+    128    009A                           
+    129    009A     00                    TWO_OK:		DB	00000000B
+    130    009B                           
+    131    009B                           ; three
+    132    009B     7E 53                 THREE_START:    MOV     R6,     #83
+    133    009D     7D C8                                 MOV     R5,     #200
+    134    009F     11 A5                                 ACALL   SOUND
+    135    00A1     11 BB                                 ACALL   THREE_D05S
+    136    00A3     01 9B                                 AJMP    THREE_START
+    137    00A5                           
+    138    00A5     C2 A6                 SOUND:          CLR     P2.6
+    139    00A7     11 B0                                 ACALL   THREE_DELAY
+    140    00A9     D2 A6                                 SETB    P2.6
+    141    00AB     11 B0                                 ACALL   THREE_DELAY
+    142    00AD     DD F6                                 DJNZ    R5, SOUND
+    143    00AF     22                                    RET
+    144    00B0                           
+    145    00B0     8E F0                 THREE_DELAY:    MOV     B,      R6
+    146    00B2     7F 06                 THREE_DL:       MOV     R7,     #6
+    147    00B4     DF FE                                 DJNZ    R7,     $
+    148    00B6     DE FA                                 DJNZ    R6,     THREE_DL
+    149    00B8     AE F0                                 MOV     R6,     B
+    150    00BA     22                                    RET
+    151    00BB                           
+    152    00BB     7D 05                 THREE_D05S:     MOV     R5,     #5
+    153    00BD     7E FA                 THREE_DL1:      MOV     R6,     #250
+    154    00BF     7F C8                 THREE_DL2:      MOV     R7,     #200
+    155    00C1     DF FE                 THREE_DL3:      DJNZ    R7,     THREE_DL3
+    156    00C3     DE FA                                 DJNZ    R6,     THREE_DL2
+    157    00C5     DD F6                                 DJNZ    R5,     THREE_DL1
+    158    00C7     22                                    RET
+    159    00C8                           
+    160    00C8                           ; four
+    161    00C8     75 90 FE              FOUR_START: MOV P1, #11111110B
+    162    00CB     30 A0 30                          JNB P2.0, FOUR_SOL
+    163    00CE     30 A1 31                          JNB P2.1, FOUR_LAL
+    164    00D1     30 A2 32                          JNB P2.2, FOUR_SIL
+    165    00D4     30 A3 33                          JNB P2.3, FOUR_DO
+    166    00D7                           
+    167    00D7     75 90 FD                          MOV P1, #11111101B
+    168    00DA     30 A0 31                          JNB P2.0, FOUR_RE
+    169    00DD     30 A1 32                          JNB P2.1, FOUR_MI
+    170    00E0     30 A2 33                          JNB P2.2, FOUR_FA
+    171    00E3     30 A3 34                          JNB P2.3, FOUR_SO
+    172    00E6                           
+    173    00E6     75 90 FB                          MOV P1, #11111011B
+    174    00E9     30 A0 32                          JNB P2.0, FOUR_LA
+    175    00EC     30 A1 33                          JNB P2.1, FOUR_SI
+    176    00EF     30 A2 34                          JNB P2.2, FOUR_DOH
+    177    00F2                           
+    178    00F2     01 C8                             AJMP  FOUR_START
+    179    00F4                           
+    180    00F4     C2 A6                 FOUR_OUTPUT: CLR P2.6
+    181    00F6     31 2A                         ACALL   FOUR_DELAY
+    182    00F8     D2 A6                         SETB    P2.6
+    183    00FA     31 2A                         ACALL   FOUR_DELAY
+    184    00FC     01 C8                         AJMP    FOUR_START
+    185    00FE                           
+    186    00FE     7E AA                 FOUR_SOL:   MOV   R6, #170
+    187    0100     01 F4                             AJMP  FOUR_OUTPUT
+    188    0102     7E 96                 FOUR_LAL:   MOV   R6, #150
+    189    0104     01 F4                             AJMP  FOUR_OUTPUT
+    190    0106     7E 86                 FOUR_SIL:   MOV   R6, #134
+    191    0108     01 F4                             AJMP  FOUR_OUTPUT
+    192    010A     7E 7E                 FOUR_DO:    MOV   R6, #126
+    193    010C     01 F4                             AJMP  FOUR_OUTPUT
+    194    010E     7E 71                 FOUR_RE:    MOV   R6, #113
+    195    0110     01 F4                             AJMP  FOUR_OUTPUT
+    196    0112     7E 64                 FOUR_MI:    MOV   R6, #100
+    197    0114     01 F4                             AJMP  FOUR_OUTPUT
+    198    0116     7E 5F                 FOUR_FA:    MOV   R6, #95
+    199    0118     01 F4                             AJMP  FOUR_OUTPUT
+    200    011A     7E 55                 FOUR_SO:    MOV   R6, #85
+    201    011C     01 F4                             AJMP  FOUR_OUTPUT
+    202    011E     7E 4B                 FOUR_LA:    MOV   R6, #75
+    203    0120     01 F4                             AJMP  FOUR_OUTPUT
+    204    0122     7E 43                 FOUR_SI:    MOV   R6, #67
+    205    0124     01 F4                             AJMP  FOUR_OUTPUT
+    206    0126     7E 3F                 FOUR_DOH:   MOV   R6, #63
+    207    0128     01 F4                             AJMP  FOUR_OUTPUT
+    208    012A                           
+    209    012A     8E F0                 FOUR_DELAY: MOV     B,  R6
+    210    012C     7F 06                 FOUR_DL:    MOV     R7, #6
+    211    012E     DF FE                             DJNZ    R7, $
+    212    0130     DE FA                             DJNZ    R6, FOUR_DL
+    213    0132     AE F0                             MOV     R6, B
+    214    0134     22                                RET
+    215    0135                           
+    216    0135                           ; five
+    217    0135     90 02 6A              FIVE_START: MOV     DPTR, #MUSIC; DPTR
+    218    0138     E4                    CONT:   CLR     A
+    219    0139     93                            MOVC    A, @A+DPTR
+    220    013A     B4 28 02                      CJNE    A, #40,CHK
+    221    013D     21 35                         AJMP    FIVE_START
+    222    013F     B4 FF 02              CHK:    CJNE    A, #255, OK
+    223    0142     21 42                 STOP:   AJMP    STOP
+    224    0144     C0 E0                 OK:     PUSH    ACC
+    225    0146     A3                            INC     DPTR
+    226    0147     E4                            CLR     A
+    227    0148     93                            MOVC    A,@A+DPTR
+    228    0149     FC                            MOV     R4, A
+    229    014A     D0 E0                         POP     ACC
+    230    014C                           
+    231    014C     B4 01 02              CHK1:   CJNE    A, #01, CHK2
+    232    014F     31 BD                         ACALL   DOL
+    233    0151     B4 02 02              CHK2:   CJNE    A, #02, CHK3
+    234    0154     31 C3                         ACALL   REL
+    235    0156     B4 03 02              CHK3:   CJNE    A, #03, CHK4
+    236    0159     31 C9                         ACALL   MIL
+    237    015B     B4 04 02              CHK4:   CJNE    A, #04, CHK5
+    238    015E     31 CF                         ACALL   FAL
+    239    0160     B4 05 02              CHK5:   CJNE    A, #05, CHK6
+    240    0163     31 D5                         ACALL   SOL
+    241    0165     B4 06 02              CHK6:   CJNE    A, #06, CHK7
+    242    0168     31 DB                         ACALL   LAL
+    243    016A     B4 07 02              CHK7:   CJNE    A, #07, CHK11
+    244    016D     31 E1                         ACALL   SIL
+    245    016F     B4 0B 02              CHK11:   CJNE    A, #011, CHK12
+    246    0172     31 E7                         ACALL   DO
+    247    0174     B4 0C 02              CHK12:   CJNE    A, #12, CHK13
+    248    0177     31 ED                         ACALL   RE
+    249    0179     B4 0D 02              CHK13:   CJNE    A, #13, CHK14
+    250    017C     31 F3                         ACALL   MI
+    251    017E     B4 0E 02              CHK14:   CJNE    A, #14, CHK15
+    252    0181     31 F9                         ACALL   FA
+    253    0183     B4 0F 02              CHK15:   CJNE    A, #15, CHK16
+    254    0186     31 FF                         ACALL   SO
+    255    0188     B4 10 02              CHK16:   CJNE    A, #16, CHK17
+    256    018B     51 05                         ACALL   LA
+    257    018D     B4 11 02              CHK17:   CJNE    A, #17, CHK21
+    258    0190     51 0B                         ACALL   SI
+    259    0192     B4 15 02              CHK21:   CJNE    A, #21, CHK22
+    260    0195     51 11                         ACALL   DOH
+    261    0197     B4 16 02              CHK22:   CJNE    A, #22, CHK23
+    262    019A     51 17                         ACALL   REH
+    263    019C     B4 17 02              CHK23:   CJNE    A, #23, CHK24
+    264    019F     51 1D                         ACALL   MIH
+    265    01A1     B4 18 02              CHK24:   CJNE    A, #24, CHK25
+    266    01A4     51 23                         ACALL   FAH
+    267    01A6     B4 19 02              CHK25:   CJNE    A, #25, CHK26
+    268    01A9     51 29                         ACALL   SOH
+    269    01AB     B4 1A 02              CHK26:   CJNE    A, #26, CHK27
+    270    01AE     51 2F                         ACALL   LAH
+    271    01B0     B4 1B 02              CHK27:   CJNE    A, #27, CHK0
+    272    01B3     51 35                         ACALL   SIH
+    273    01B5     B4 00 02              CHK0:   CJNE    A, #00, CONT2
+    274    01B8     51 3B                         ACALL   NON
+    275    01BA     A3                    CONT2:  INC     DPTR
+    276    01BB     21 38                         AJMP    CONT
+    277    01BD                           
+    278    01BD     7E FE                 DOL:    MOV     R6, #254
+    279    01BF     7D 10                         MOV     R5, #16
+    280    01C1     41 41                         AJMP    OUTPUT
+    281    01C3     7E E2                 REL:    MOV     R6, #226
+    282    01C5     7D 12                         MOV     R5, #18
+    283    01C7     41 41                         AJMP    OUTPUT
+    284    01C9     7E C9                 MIL:    MOV     R6, #201
+    285    01CB     7D 15                         MOV     R5, #21
+    286    01CD     41 41                         AJMP    OUTPUT
+    287    01CF     7E BE                 FAL:    MOV     R6, #190
+    288    01D1     7D 16                         MOV     R5, #22
+    289    01D3     41 41                         AJMP    OUTPUT
+    290    01D5     7E AA                 SOL:    MOV     R6, #170
+    291    01D7     7D 19                         MOV     R5, #25
+    292    01D9     41 41                         AJMP    OUTPUT
+    293    01DB     7E 96                 LAL:    MOV     R6, #150
+    294    01DD     7D 1C                         MOV     R5, #28
+    295    01DF     41 41                         AJMP    OUTPUT
+    296    01E1     7E 86                 SIL:    MOV     R6, #134
+    297    01E3     7D 1F                         MOV     R5, #31
+    298    01E5     41 41                         AJMP    OUTPUT
+    299    01E7     7E 7E                 DO:     MOV     R6, #126
+    300    01E9     7D 21                         MOV     R5, #33
+    301    01EB     41 41                         AJMP    OUTPUT
+    302    01ED     7E 71                 RE:     MOV     R6, #113
+    303    01EF     7D 25                         MOV     R5, #37
+    304    01F1     41 41                         AJMP    OUTPUT
+    305    01F3     7E 64                 MI:     MOV     R6, #100
+    306    01F5     7D 29                         MOV     R5, #41
+    307    01F7     41 41                         AJMP    OUTPUT
+    308    01F9     7E 5F                 FA:     MOV     R6, #95
+    309    01FB     7D 2C                         MOV     R5, #44
+    310    01FD     41 41                         AJMP    OUTPUT
+    311    01FF     7E 55                 SO:     MOV     R6, #85
+    312    0201     7D 31                         MOV     R5, #49
+    313    0203     41 41                         AJMP    OUTPUT
+    314    0205     7E 4B                 LA:     MOV     R6, #75
+    315    0207     7D 37                         MOV     R5, #55
+    316    0209     41 41                         AJMP    OUTPUT
+    317    020B     7E 43                 SI:     MOV     R6, #67
+    318    020D     7D 3E                         MOV     R5, #62
+    319    020F     41 41                         AJMP    OUTPUT
+    320    0211     7E 3F                 DOH:     MOV     R6, #63
+    321    0213     7D 41                         MOV     R5, #65
+    322    0215     41 41                         AJMP    OUTPUT
+    323    0217     7E 38                 REH:     MOV     R6, #56
+    324    0219     7D 49                         MOV     R5, #73
+    325    021B     41 41                         AJMP    OUTPUT
+    326    021D     7E 32                 MIH:     MOV     R6, #50
+    327    021F     7D 52                         MOV     R5, #82
+    328    0221     41 41                         AJMP    OUTPUT
+    329    0223     7E 2F                 FAH:     MOV     R6, #47
+    330    0225     7D 58                         MOV     R5, #88
+    331    0227     41 41                         AJMP    OUTPUT
+    332    0229     7E 2A                 SOH:     MOV     R6, #42
+    333    022B     7D 62                         MOV     R5, #98
+    334    022D     41 41                         AJMP    OUTPUT
+    335    022F     7E 25                 LAH:     MOV     R6, #37
+    336    0231     7D 6E                         MOV     R5, #110
+    337    0233     41 41                         AJMP    OUTPUT
+    338    0235     7E 21                 SIH:     MOV     R6, #33
+    339    0237     7D 7C                         MOV     R5, #124
+    340    0239     41 41                         AJMP    OUTPUT
+    341    023B     7E 21                 NON:    MOV     R6, #33
+    342    023D     7D 7C                         MOV     R5, #124
+    343    023F     41 41                         AJMP    OUTPUT
+    344    0241                           
+    345    0241     C0 05                 OUTPUT: PUSH    05
+    346    0243     B4 00 02              FIVE_LOOP:   CJNE    A, #00, FIVE_SOUND
+    347    0246     41 4A                         AJMP    MUTE
+    348    0248     C2 A6                 FIVE_SOUND:  CLR     P2.6
+    349    024A     51 5F                 MUTE:   ACALL   FIVE_DELAY
+    350    024C     D2 A6                         SETB    P2.6
+    351    024E     51 5F                         ACALL   FIVE_DELAY
+    352    0250     DD F1                         DJNZ    R5, FIVE_LOOP
+    353    0252                           
+    354    0252     D0 05                         POP     05
+    355    0254     DC EB                         DJNZ    R4, OUTPUT
+    356    0256     7E AA                 REST:   MOV     R6, #170
+    357    0258     7D 14                         MOV     R5, #20
+    358    025A     51 5F                 WAIT:   ACALL    FIVE_DELAY
+    359    025C     DD FC                         DJNZ    R5, WAIT
+    360    025E     22                            RET
+    361    025F                           
+    362    025F     8E F0                 FIVE_DELAY:  MOV     B, R6
+    363    0261     7F 06                 FIVE_DL:     MOV     R7, #6
+    364    0263     DF FE                         DJNZ    R7, $
+    365    0265     DE FA                         DJNZ    R6, FIVE_DL
+    366    0267     AE F0                         MOV     R6, B
+    367    0269     22                            RET
+    368    026A                           
+    369    026A     0F 04 0D 04 0D        MUSIC:  DB  15,04,13,04,13,04
+    370    0270     0E 06 0C 02 0C                DB  14,06,12,02,12,04
+    371    0276     0B 04 0C 04 0D                DB  11,04,12,04,13,04
+    372    027C     0E 06 0F 02 0F                DB  14,06,15,02,15,04
+    373    0282     0F 04 0F 04 0F                DB  15,04,15,04,15,04
+    374    0288                           
+    375    0288     0F 04 0D 04 0D                DB  15,04,13,04,13,04
+    376    028E     0E 06 0C 02 0C                DB  14,06,12,02,12,04
+    377    0294     0B 04 0D 04 0F                DB  11,04,13,04,15,04
+    378    029A     0F 06 0B 02 0B                DB  15,06,11,02,11,04
+    379    02A0                           
+    380    02A0                           
+    381    02A0     FF                            DB  255
+    382    02A1                           
+    383    02A1                           ; six
+    384    02A1     78 D3                 SIX_START:  MOV 	R0,	#SIX_OK - SIX_TABLE + 1
+    385    02A3     90 02 C0                          MOV 	DPTR, 	#SIX_TABLE
+    386    02A6     79 00                             MOV		R1,	#00H
+    387    02A8                           
+    388    02A8     E9                    SIX_LOOP:	MOV		A, 	R1
+    389    02A9     93                    		MOVC 	A, @A+DPTR
+    390    02AA     F5 80                 		MOV		P0,	A
+    391    02AC     51 B3                 		ACALL	SIX_DELAY
+    392    02AE     09                    		INC		R1
+    393    02AF                           
+    394    02AF     D8 F7                 		DJNZ	R0, SIX_LOOP
+    395    02B1     41 A1                 		AJMP	SIX_START
+    396    02B3                           
+    397    02B3     7D 02                 SIX_DELAY:	MOV		R5, #2
+    398    02B5     7E FA                 SIX_DL1:	MOV		R6, #250
+    399    02B7     7F C8                 SIX_DL2:	MOV		R7,	#200
+    400    02B9     DF FE                 SIX_DL3:	DJNZ 	R7, SIX_DL3
+    401    02BB     DE FA                 		DJNZ	R6, SIX_DL2
+    402    02BD     DD F6                 		DJNZ	R5, SIX_DL1
+    403    02BF     22                    		RET
+    404    02C0                           
+    405    02C0     81                    SIX_TABLE:	DB		10000001B
+    406    02C1     C3                    		DB		11000011B
+    407    02C2     E7                    		DB		11100111B
+    408    02C3     FF                    		DB		11111111B
+    409    02C4     E7                    		DB		11100111B
+    410    02C5     C3                    		DB		11000011B
+    411    02C6     81                    		DB		10000001B
+    412    02C7     00                    		DB		00000000B
+    413    02C8                           
+    414    02C8     81                    		DB		10000001B
+    415    02C9     C3                    		DB		11000011B
+    416    02CA     E7                    		DB		11100111B
+    417    02CB     FF                    		DB		11111111B
+    418    02CC     E7                    		DB		11100111B
+    419    02CD     C3                    		DB		11000011B
+    420    02CE     81                    		DB		10000001B
+    421    02CF     00                    		DB		00000000B
+    422    02D0                           
+    423    02D0     FF                    		DB		11111111B
+    424    02D1     00                    		DB		00000000B
+    425    02D2     FF                    		DB		11111111B
+    426    02D3     00                    SIX_OK:		DB		00000000B
