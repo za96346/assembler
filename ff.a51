@@ -1,0 +1,87 @@
+FIVE_START: MOV     DPTR, #MUSIC2; DPTR
+FIVE_CONT:   CLR     A
+        MOVC    A, @A+DPTR
+        CJNE    A, #40,FIVE_CHK
+
+FIVE_CHK:    CJNE    A, #255, FIVE_OK
+FIVE_STOP:   AJMP    FIVE_STOP
+FIVE_OK:     PUSH    ACC
+        INC     DPTR
+        CLR     A
+        MOVC    A,@A+DPTR
+        MOV     R4, A
+        POP     ACC
+
+FIVE_CHK1:   CJNE    A, #01, FIVE_CHK2
+        ACALL   DOL
+FIVE_CHK2:   CJNE    A, #02, FIVE_CHK3
+        ACALL   REL
+FIVE_CHK3:   CJNE    A, #03, FIVE_CHK4
+        ACALL   MIL
+FIVE_CHK4:   CJNE    A, #04, FIVE_CHK5
+        ACALL   FAL
+FIVE_CHK5:   CJNE    A, #05, FIVE_CHK6
+        ACALL   SOL
+FIVE_CHK6:   CJNE    A, #06, FIVE_CHK7
+        ACALL   LAL
+FIVE_CHK7:   CJNE    A, #07, FIVE_CHK11
+        ACALL   SIL
+FIVE_CHK11:   CJNE    A, #011, FIVE_CHK12
+        ACALL   DO
+FIVE_CHK12:   CJNE    A, #12, FIVE_CHK13
+        ACALL   RE
+FIVE_CHK13:   CJNE    A, #13, FIVE_CHK14
+        ACALL   MI
+FIVE_CHK14:   CJNE    A, #14, FIVE_CHK15
+        ACALL   FA
+FIVE_CHK15:   CJNE    A, #15, FIVE_CHK16
+        ACALL   SO
+FIVE_CHK16:   CJNE    A, #16, FIVE_CHK17
+        ACALL   LA
+FIVE_CHK17:   CJNE    A, #17, FIVE_CHK21
+        ACALL   SI
+FIVE_CHK21:   CJNE    A, #21, FIVE_CHK22
+        ACALL   DOH
+FIVE_CHK22:   CJNE    A, #22, FIVE_CHK23
+        ACALL   REH
+FIVE_CHK23:   CJNE    A, #23, FIVE_CHK24
+        ACALL   MIH
+FIVE_CHK24:   CJNE    A, #24, FIVE_CHK25
+        ACALL   FAH
+FIVE_CHK25:   CJNE    A, #25, FIVE_CHK26
+        ACALL   SOH
+FIVE_CHK26:   CJNE    A, #26, FIVE_CHK27
+        ACALL   LAH
+FIVE_CHK27:   CJNE    A, #27, FIVE_CHK0
+        ACALL   SIH
+FIVE_CHK0:   CJNE    A, #00, FIVE_CONT2
+        ACALL   NON
+FIVE_CONT2:  INC     DPTR
+        AJMP    FIVE_CONT
+
+
+FIVE_OUTPUT: PUSH    05
+FIVE_LOOP:   CJNE    A, #00, FIVE_SOUND
+        AJMP    FIVE_MUTE
+FIVE_SOUND:  CLR     P2.6
+FIVE_MUTE:   ACALL   FIVE_DELAY
+        SETB    P2.6
+        ACALL   FIVE_DELAY
+        DJNZ    R5, FIVE_LOOP
+
+        POP     05
+        DJNZ    R4, FIVE_OUTPUT
+FIVE_REST:   MOV     R6, #170
+        MOV     R5, #20
+FIVE_WAIT:   ACALL    FIVE_DELAY
+        DJNZ    R5, FIVE_WAIT
+        RET
+
+FIVE_DELAY:  MOV     B, R6
+FIVE_DL:     MOV     R7, #6
+        DJNZ    R7, $
+        DJNZ    R6, FIVE_DL
+        MOV     R6, B
+        RET
+
+MUSIC2:  DB  11

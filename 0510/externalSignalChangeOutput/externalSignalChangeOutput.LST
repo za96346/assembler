@@ -1,0 +1,43 @@
+Intel-8051 Macro Assembler - Version 1.00
+
+      1    0000                                   ORG     0000H
+      2    0000     01 1E                         AJMP    MAIN
+      3    0002                                   
+      4    0003                                   ORG     0003H
+      5    0003                           
+      6    0003     C0 80                         PUSH    P0
+      7    0005     C0 06                         PUSH    06
+      8    0007     C0 07                         PUSH    07
+      9    0009                           
+     10    0009     7D 0A                         MOV     R5,     #10
+     11    000B                           
+     12    000B     75 80 FF              ALARM:  MOV     P0,     #11111111B
+     13    000E     11 32                         ACALL   DELAY
+     14    0010     75 80 FE                      MOV     P0,     #11111110B
+     15    0013     11 32                         ACALL   DELAY
+     16    0015     DD F4                         DJNZ    R5,     ALARM
+     17    0017                           
+     18    0017     D0 07                         POP     07
+     19    0019     D0 06                         POP     06
+     20    001B     D0 80                         POP     P0
+     21    001D                           
+     22    001D     32                            RETI
+     23    001E                           
+     24    001E     D2 B2                 MAIN:   SETB    P3.2
+     25    0020     D2 88                         SETB    IT0
+     26    0022     D2 A8                         SETB    EX0
+     27    0024     D2 AF                         SETB    EA
+     28    0026                           
+     29    0026     75 80 0F              LOOP:   MOV     P0,     #00001111B
+     30    0029     11 32                         ACALL   DELAY
+     31    002B     75 80 F0                      MOV     P0,     #11110000B
+     32    002E     11 32                         ACALL   DELAY
+     33    0030     01 26                         AJMP    LOOP
+     34    0032                           
+     35    0032     7E FA                 DELAY:  MOV     R6,     #250
+     36    0034     7F C8                 DL1:    MOV     R7,     #200
+     37    0036     DF FE                 DL2:    DJNZ    R7,     DL2
+     38    0038     DE FA                         DJNZ    R6,     DL1
+     39    003A     22                            RET
+     40    003B                           
+     41    003B                                   END
