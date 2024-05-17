@@ -1,186 +1,201 @@
 Intel-8051 Macro Assembler - Version 1.00
 
-      1    0000                           							ORG     0000H
-      2    0000     01 4D                 							AJMP    MAIN
+      1    0000                                                       ORG     0000H
+      2    0000     01 15                                             AJMP    MAIN
       3    0002                           
-      4    0002                           ; busy tone break point
-      5    0013                           							ORG     0013H
-      6    0013                           
-      7    0013     C0 80                 							PUSH    P0
-      8    0015     C0 06                 							PUSH    06
-      9    0017     C0 07                 							PUSH    07
-     10    0019                           
-     11    0019     7D 0A                 							MOV     R5,     #10
-     12    001B                           
-     13    001B                           ; busy tone
-     14    001B     7E 53                 BUSY_TONE_START:  			MOV 	R6, 	#83
-     15    001D     7D C8                 							MOV 	R5, 	#200
-     16    001F     11 2C                 							ACALL 	BUSY_TONE_SOUND
-     17    0021     11 42                 							ACALL 	BUSY_TONE_D05S
-     18    0023     11 2C                 							ACALL 	BUSY_TONE_SOUND
-     19    0025     11 42                 							ACALL 	BUSY_TONE_D05S
-     20    0027     11 2C                 							ACALL 	BUSY_TONE_SOUND
-     21    0029     11 42                 							ACALL 	BUSY_TONE_D05S
-     22    002B     32                    							RETI
-     23    002C                           
-     24    002C     C2 B6                 BUSY_TONE_SOUND:  			CLR     P3.6
-     25    002E     11 37                 							ACALL   BUSY_TONE_DELAY
-     26    0030     D2 A6                 							SETB    P2.6
-     27    0032     11 37                 							ACALL   BUSY_TONE_DELAY
-     28    0034     DD F6                 							DJNZ    R5, 	BUSY_TONE_SOUND
-     29    0036     22                    							RET
-     30    0037                           
-     31    0037     8E F0                 BUSY_TONE_DELAY:  			MOV     B, 		R6
-     32    0039     7F 06                 BUSY_TONE_DL:     			MOV     R7, 	#6
-     33    003B     DF FE                 							DJNZ    R7, 	$
-     34    003D     DE FA                 							DJNZ    R6, 	BUSY_TONE_DL
-     35    003F     AE F0                 							MOV     R6, 	B
-     36    0041     22                    							RET
-     37    0042                           
-     38    0042     7D 05                 BUSY_TONE_D05S:   			MOV     R5, 	#5
-     39    0044     7E FA                 BUSY_TONE_DL1:    			MOV     R6, 	#250
-     40    0046     7F C8                 BUSY_TONE_DL2:    			MOV     R7, 	#200
-     41    0048     DF FE                 BUSY_TONE_DL3:    			DJNZ    R7, 	BUSY_TONE_DL3
-     42    004A     DE FA                 							DJNZ    R6, 	BUSY_TONE_DL2
-     43    004C     DD F6                 							DJNZ    R5, 	BUSY_TONE_DL1
-     44    004E     22                    							RET
-     45    004F                           
-     46    004F                           
-     47    004F                           ; double spot light break point						
-     48    0003                           							ORG     0003H
-     49    0003                           
-     50    0003     C0 80                 							PUSH    P0
-     51    0005     C0 06                 							PUSH    06
-     52    0007     C0 07                 							PUSH    07
-     53    0009                           
-     54    0009     7D 0A                 							MOV     R5,     #10
-     55    000B                           
-     56    000B                           ; double spot light
-     57    000B     75 80 FF              DOUBLE_SPOTLIGHT_LOOP:  	MOV     P0,     #11111111B
-     58    000E     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     59    0010     75 80 FC              							MOV     P0,     #11111100B
-     60    0013     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     61    0015     75 80 FF              							MOV     P0,     #11111111B
-     62    0018     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     63    001A     75 80 FC              							MOV     P0,     #11111100B
-     64    001D     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     65    001F     75 80 FF              							MOV     P0,     #11111111B
-     66    0022     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     67    0024     75 80 FC              							MOV     P0,     #11111100B
-     68    0027     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     69    0029     75 80 FF              							MOV     P0,     #11111111B
-     70    002C     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     71    002E     75 80 FC              							MOV     P0,     #11111100B
-     72    0031     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     73    0033     75 80 FF              							MOV     P0,     #11111111B
-     74    0036     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     75    0038     75 80 FC              							MOV     P0,     #11111100B
-     76    003B     11 44                 							ACALL   DOUBLE_SPOTLIGHT_DELAY
-     77    003D                           
-     78    003D     D0 07                 							POP     07
-     79    003F     D0 06                 							POP     06
-     80    0041     D0 80                 							POP     P0
-     81    0043     32                    							RETI
-     82    0044                           
-     83    0044     7E FA                 DOUBLE_SPOTLIGHT_DELAY:  	MOV     R6,     #250
-     84    0046     7F C8                 DOUBLE_SPOTLIGHT_DL1:    	MOV     R7,     #200
-     85    0048     DF FE                 DOUBLE_SPOTLIGHT_DL2:    	DJNZ    R7,     DOUBLE_SPOTLIGHT_DL2
-     86    004A     DE FA                 							DJNZ    R6,     DOUBLE_SPOTLIGHT_DL1
-     87    004C     22                    							RET
-     88    004D                           
-     89    004D     D2 B2                 MAIN:   					SETB    P3.2
-     90    004F     D2 88                 							SETB    IT0
-     91    0051     D2 A8                 							SETB    EX0
-     92    0053                           
-     93    0053     D2 B3                 							SETB    P3.3
-     94    0055     D2 8A                 							SETB    IT1
-     95    0057     D2 AA                 							SETB    EX1
-     96    0059     D2 AF                 							SETB    EA
-     97    005B                           
-     98    005B     01 66                 LOOP:   					AJMP    TRAFFIC_LIGHT_START
-     99    005D                           
-    100    005D     7E FA                 DELAY:  					MOV     R6,     #250
-    101    005F     7F C8                 DL1:    					MOV     R7,     #200
-    102    0061     DF FE                 DL2:    					DJNZ    R7,     DL2
-    103    0063     DE FA                         					DJNZ    R6,     DL1
-    104    0065     22                            					RET
-    105    0066                           
-    106    0066                           ; traffic light
-    107    0066     78 35                 TRAFFIC_LIGHT_START:		MOV		R0,		#TRAFFIC_LIGHT_OK-TRAFFIC_LIGHT_TABLE+1
-    108    0068     90 00 85              							MOV		DPTR,	#TRAFFIC_LIGHT_TABLE
-    109    006B     79 00                 							MOV		R1,		#00H
-    110    006D                           
-    111    006D     E9                    TRAFFIC_LIGHT_LOOP:			MOV		A,		R1
-    112    006E     93                    							MOVC	A,		@A+DPTR
-    113    006F     F5 80                 							MOV		P0,		A
-    114    0071     11 78                 							ACALL	TRAFFIC_LIGHT_DELAY
-    115    0073     09                    							INC		R1
-    116    0074     D8 F7                 							DJNZ	R0,		TRAFFIC_LIGHT_LOOP
-    117    0076     01 66                 							AJMP	TRAFFIC_LIGHT_START
-    118    0078                           
-    119    0078     7D 01                 TRAFFIC_LIGHT_DELAY:		MOV		R5,		#1
-    120    007A     7E FA                 TRAFFIC_LIGHT_DL1:			MOV		R6,		#250
-    121    007C     7F C8                 TRAFFIC_LIGHT_DL2:			MOV		R7,		#200
-    122    007E     DF FE                 TRAFFIC_LIGHT_DL3:			DJNZ	R7,		TRAFFIC_LIGHT_DL3
-    123    0080     DE FA                 							DJNZ	R6,		TRAFFIC_LIGHT_DL2
-    124    0082     DD F6                 							DJNZ	R5,		TRAFFIC_LIGHT_DL1
-    125    0084     22                    							RET
-    126    0085                           
-    127    0085                           
-    128    0085     84                    TRAFFIC_LIGHT_TABLE:		DB	10000100B
-    129    0086     84                    							DB	10000100B
-    130    0087     84                    							DB	10000100B
-    131    0088     84                    							DB	10000100B
-    132    0089     84                    							DB	10000100B
-    133    008A     84                    							DB	10000100B
-    134    008B     84                    							DB	10000100B
-    135    008C     84                    							DB	10000100B
-    136    008D     84                    							DB	10000100B
-    137    008E     84                    							DB	10000100B
-    138    008F     84                    							DB	10000100B
-    139    0090     84                    							DB	10000100B
-    140    0091     84                    							DB	10000100B
-    141    0092     84                    							DB	10000100B
-    142    0093     84                    							DB	10000100B
-    143    0094     84                    							DB	10000100B
-    144    0095     84                    							DB	10000100B
-    145    0096     84                    							DB	10000100B
-    146    0097     84                    							DB	10000100B
-    147    0098     84                    							DB	10000100B
-    148    0099                           
-    149    0099     88                    							DB	10001000B
-    150    009A     80                    							DB	10000000B
-    151    009B     88                    							DB	10001000B
-    152    009C     80                    							DB	10000000B
-    153    009D     88                    							DB	10001000B
-    154    009E     80                    							DB	10000000B
-    155    009F                           
-    156    009F     30                    							DB	00110000B
-    157    00A0     30                    							DB	00110000B
-    158    00A1     30                    							DB	00110000B
-    159    00A2     30                    							DB	00110000B
-    160    00A3     30                    							DB	00110000B
-    161    00A4     30                    							DB	00110000B
-    162    00A5     30                    							DB	00110000B
-    163    00A6     30                    							DB	00110000B
-    164    00A7     30                    							DB	00110000B
-    165    00A8     30                    							DB	00110000B
-    166    00A9     30                    							DB	00110000B
-    167    00AA     30                    							DB	00110000B
-    168    00AB     30                    							DB	00110000B
-    169    00AC     30                    							DB	00110000B
-    170    00AD     30                    							DB	00110000B
-    171    00AE     30                    							DB	00110000B
-    172    00AF     30                    							DB	00110000B
-    173    00B0     30                    							DB	00110000B
-    174    00B1     30                    							DB	00110000B
-    175    00B2     30                    							DB	00110000B
-    176    00B3                           
-    177    00B3     50                    							DB	01010000B
-    178    00B4     10                    							DB	00010000B
-    179    00B5     50                    							DB	01010000B
-    180    00B6     10                    							DB	00010000B
-    181    00B7     50                    							DB	01010000B
-    182    00B8     10                    							DB	00010000B
-    183    00B9                           
-    184    00B9     00                    TRAFFIC_LIGHT_OK:			DB	00000000B
+      4    0002                           ; IT0 中斷
+      5    0003                                                       ORG     0003H
+      6    0003     01 25                                             AJMP    IT0_ISR
+      7    0005                           
+      8    0005                           ; IT1 中斷
+      9    0013                                                       ORG     0013H
+     10    0013     01 73                                             AJMP    IT1_ISR
+     11    0015                           
+     12    0015     D2 B2                 MAIN:                       SETB    P3.2
+     13    0017     D2 88                                             SETB    IT0
+     14    0019     D2 A8                                             SETB    EX0
+     15    001B                           
+     16    001B     D2 B3                                             SETB    P3.3
+     17    001D     D2 8A                                             SETB    IT1
+     18    001F     D2 AA                                             SETB    EX1
+     19    0021     D2 AF                                             SETB    EA
+     20    0023                           
+     21    0023     01 C5                                             AJMP    TRAFFIC_LIGHT_START
+     22    0025                           
+     23    0025                           
+     24    0025                           
+     25    0025                           ; IT0 中斷
+     26    0025                           IT0_ISR:                    
+     27    0025     C0 80                                             PUSH    P0
+     28    0027     C0 06                                             PUSH    06
+     29    0029     C0 07                                             PUSH    07
+     30    002B     C0 02                                             PUSH    02
+     31    002D     7D 05                 							MOV     R5,     #5
+     32    002F                           
+     33    002F     7E 7E                 START:  MOV     R6,     #126
+     34    0031     7D C1                         MOV     R5,     #193
+     35    0033     11 50                         ACALL   SOUND
+     36    0035     11 66                 		ACALL 	D05S
+     37    0037                           
+     38    0037     7E 7E                 		MOV     R6,     #126
+     39    0039     7D C1                         MOV     R5,     #193
+     40    003B     11 50                         ACALL   SOUND
+     41    003D     11 66                 		ACALL 	D05S
+     42    003F                           
+     43    003F     7E 7E                 		MOV     R6,     #126
+     44    0041     7D C1                         MOV     R5,     #193
+     45    0043     11 50                         ACALL   SOUND
+     46    0045     11 66                 		ACALL 	D05S
+     47    0047                           
+     48    0047                           		
+     49    0047                           
+     50    0047     D0 02                 		POP     02
+     51    0049     D0 07                 		POP     07
+     52    004B     D0 06                 		POP     06
+     53    004D     D0 80                 		POP     P0
+     54    004F     32                    		RETI
+     55    0050                           
+     56    0050     C2 A6                 SOUND:  CLR     P2.6
+     57    0052     11 5B                         ACALL   DELLY
+     58    0054     D2 A6                         SETB    P2.6
+     59    0056     11 5B                         ACALL   DELLY
+     60    0058     DD F6                         DJNZ    R5,     SOUND
+     61    005A     22                            RET
+     62    005B                           
+     63    005B     8A F0                 DELLY:  MOV     B,      R2
+     64    005D     79 06                 DL:     MOV     R1,     #6
+     65    005F     D9 FE                         DJNZ    R1,     $
+     66    0061     DA FA                         DJNZ    R2,     DL
+     67    0063     AA F0                         MOV     R2,     B
+     68    0065     22                            RET
+     69    0066                           
+     70    0066     7A 05                 D05S:   MOV     R2, #5
+     71    0068     7B FA                 DL1:    MOV     R3, #250
+     72    006A     7C C8                 DL2:    MOV     R4, #200
+     73    006C     DC FE                 DL3:    DJNZ    R4, DL3
+     74    006E     DB FA                         DJNZ    R3, DL2
+     75    0070     DA F6                         DJNZ    R2, DL1
+     76    0072     22                            RET
+     77    0073                           
+     78    0073                           ; IT1 中斷
+     79    0073                           IT1_ISR:                    
+     80    0073     C0 E0                                             PUSH    ACC
+     81    0075     C0 F0                                             PUSH    B
+     82    0077     C0 82                                             PUSH    DPL
+     83    0079     C0 83                                             PUSH    DPH
+     84    007B     C0 D0                                             PUSH    PSW
+     85    007D                           
+     86    007D     7D 0A                                             MOV     R5,     #10
+     87    007F                           
+     88    007F     75 80 FF              DOUBLE_SPOTLIGHT_LOOP:      MOV     P0,     #11111111B
+     89    0082     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+     90    0084     75 80 FC                                          MOV     P0,     #11111100B
+     91    0087     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+     92    0089     75 80 FF                                          MOV     P0,     #11111111B
+     93    008C     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+     94    008E     75 80 FC                                          MOV     P0,     #11111100B
+     95    0091     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+     96    0093     75 80 FF                                          MOV     P0,     #11111111B
+     97    0096     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+     98    0098     75 80 FC                                          MOV     P0,     #11111100B
+     99    009B     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+    100    009D     75 80 FF                                          MOV     P0,     #11111111B
+    101    00A0     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+    102    00A2     75 80 FC                                          MOV     P0,     #11111100B
+    103    00A5     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+    104    00A7     75 80 FF                                          MOV     P0,     #11111111B
+    105    00AA     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+    106    00AC     75 80 FC                                          MOV     P0,     #11111100B
+    107    00AF     11 BC                                             ACALL   DOUBLE_SPOTLIGHT_DELAY
+    108    00B1                           
+    109    00B1     D0 D0                                             POP     PSW
+    110    00B3     D0 83                                             POP     DPH
+    111    00B5     D0 82                                             POP     DPL
+    112    00B7     D0 F0                                             POP     B
+    113    00B9     D0 E0                                             POP     ACC
+    114    00BB     32                                                RETI
+    115    00BC                           
+    116    00BC     7E FA                 DOUBLE_SPOTLIGHT_DELAY:     MOV     R6,     #250
+    117    00BE     7F C8                 DOUBLE_SPOTLIGHT_DL1:       MOV     R7,     #200
+    118    00C0     DF FE                 DOUBLE_SPOTLIGHT_DL2:       DJNZ    R7,     DOUBLE_SPOTLIGHT_DL2
+    119    00C2     DE FA                                             DJNZ    R6,     DOUBLE_SPOTLIGHT_DL1
+    120    00C4     22                                                RET
+    121    00C5                           
+    122    00C5                           ; 交通信
+    123    00C5     78 35                 TRAFFIC_LIGHT_START:        MOV     R0,     #TRAFFIC_LIGHT_OK-TRAFFIC_LIGHT_TABLE+1
+    124    00C7     90 00 E4                                          MOV     DPTR,   #TRAFFIC_LIGHT_TABLE
+    125    00CA     79 00                                             MOV     R1,     #00H
+    126    00CC                           
+    127    00CC     E9                    TRAFFIC_LIGHT_LOOP:         MOV     A,      R1
+    128    00CD     93                                                MOVC    A,      @A+DPTR
+    129    00CE     F5 80                                             MOV     P0,     A
+    130    00D0     11 D7                                             ACALL   TRAFFIC_LIGHT_DELAY
+    131    00D2     09                                                INC     R1
+    132    00D3     D8 F7                                             DJNZ    R0,     TRAFFIC_LIGHT_LOOP
+    133    00D5     01 C5                                             AJMP    TRAFFIC_LIGHT_START
+    134    00D7                           
+    135    00D7     7D 01                 TRAFFIC_LIGHT_DELAY:        MOV     R5,     #1
+    136    00D9     7E FA                 TRAFFIC_LIGHT_DL1:          MOV     R6,     #250
+    137    00DB     7F C8                 TRAFFIC_LIGHT_DL2:          MOV     R7,     #200
+    138    00DD     DF FE                 TRAFFIC_LIGHT_DL3:          DJNZ    R7,     TRAFFIC_LIGHT_DL3
+    139    00DF     DE FA                                             DJNZ    R6,     TRAFFIC_LIGHT_DL2
+    140    00E1     DD F6                                             DJNZ    R5,     TRAFFIC_LIGHT_DL1
+    141    00E3     22                                                RET
+    142    00E4                           
+    143    00E4     84                    TRAFFIC_LIGHT_TABLE:        DB      10000100B
+    144    00E5     84                                                DB      10000100B
+    145    00E6     84                                                DB      10000100B
+    146    00E7     84                                                DB      10000100B
+    147    00E8     84                                                DB      10000100B
+    148    00E9     84                                                DB      10000100B
+    149    00EA     84                                                DB      10000100B
+    150    00EB     84                                                DB      10000100B
+    151    00EC     84                                                DB      10000100B
+    152    00ED     84                                                DB      10000100B
+    153    00EE     84                                                DB      10000100B
+    154    00EF     84                                                DB      10000100B
+    155    00F0     84                                                DB      10000100B
+    156    00F1     84                                                DB      10000100B
+    157    00F2     84                                                DB      10000100B
+    158    00F3     84                                                DB      10000100B
+    159    00F4     84                                                DB      10000100B
+    160    00F5     84                                                DB      10000100B
+    161    00F6     84                                                DB      10000100B
+    162    00F7     84                                                DB      10000100B
+    163    00F8                           
+    164    00F8     88                                                DB      10001000B
+    165    00F9     80                                                DB      10000000B
+    166    00FA     88                                                DB      10001000B
+    167    00FB     80                                                DB      10000000B
+    168    00FC     88                                                DB      10001000B
+    169    00FD     80                                                DB      10000000B
+    170    00FE                           
+    171    00FE     30                                                DB      00110000B
+    172    00FF     30                                                DB      00110000B
+    173    0100     30                                                DB      00110000B
+    174    0101     30                                                DB      00110000B
+    175    0102     30                                                DB      00110000B
+    176    0103     30                                                DB      00110000B
+    177    0104     30                                                DB      00110000B
+    178    0105     30                                                DB      00110000B
+    179    0106     30                                                DB      00110000B
+    180    0107     30                                                DB      00110000B
+    181    0108     30                                                DB      00110000B
+    182    0109     30                                                DB      00110000B
+    183    010A     30                                                DB      00110000B
+    184    010B     30                                                DB      00110000B
+    185    010C     30                                                DB      00110000B
+    186    010D     30                                                DB      00110000B
+    187    010E     30                                                DB      00110000B
+    188    010F     30                                                DB      00110000B
+    189    0110     30                                                DB      00110000B
+    190    0111     30                                                DB      00110000B
+    191    0112                           
+    192    0112     50                                                DB      01010000B
+    193    0113     10                                                DB      00010000B
+    194    0114     50                                                DB      01010000B
+    195    0115     10                                                DB      00010000B
+    196    0116     50                                                DB      01010000B
+    197    0117     10                                                DB      00010000B
+    198    0118                           
+    199    0118     00                    TRAFFIC_LIGHT_OK:           DB      00000000B

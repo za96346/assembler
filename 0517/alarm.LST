@@ -1,0 +1,25 @@
+Intel-8051 Macro Assembler - Version 1.00
+
+      1    0000                                   ORG 0000H
+      2    0000     7E 7E                 START:  MOV     R6,     #126
+      3    0002     7D C1                         MOV     R5,     #193
+      4    0004     11 0E                         ACALL   SOUND
+      5    0006                           
+      6    0006     7E 5F                         MOV     R6,     #95
+      7    0008     7D FF                         MOV     R5,     #255
+      8    000A     11 0E                         ACALL   SOUND
+      9    000C                           
+     10    000C     01 00                         AJMP    START
+     11    000E                           
+     12    000E     C2 A6                 SOUND:  CLR     P2.6
+     13    0010     11 19                         ACALL   DELLY
+     14    0012     D2 A6                         SETB    P2.6
+     15    0014     11 19                         ACALL   DELLY
+     16    0016     DD F6                         DJNZ    R5,     SOUND
+     17    0018     22                            RET
+     18    0019     8E F0                 DELLY:  MOV     B,      R6
+     19    001B     7F 06                 DL:     MOV     R7,     #6
+     20    001D     DF FE                         DJNZ    R7,     $
+     21    001F     DE FA                         DJNZ    R6,     DL
+     22    0021     AE F0                         MOV     R6,     B
+     23    0023     22                            RET

@@ -24,54 +24,51 @@ MAIN:                       SETB    P3.2
 
 ; IT0 中斷
 IT0_ISR:                    
-                            PUSH    P0
-                            PUSH    06
-                            PUSH    07
-                            PUSH    02
-							MOV     R5,     #5
+                            PUSH    ACC
+                            PUSH    B
+                            PUSH    DPL
+                            PUSH    DPH
+                            PUSH    PSW
 
-START:  					MOV     R6,     #126
-							MOV     R5,     #193
-							ACALL   SOUND
-							ACALL 	D05S
+                            MOV     R5,     #10
 
-							MOV     R6,     #126
-							MOV     R5,     #193
-							ACALL   SOUND
-							ACALL 	D05S
+BUSY_TONE_START:            MOV     R6,     #83
+                            MOV     R5,     #200
+                            ACALL   BUSY_TONE_SOUND
+                            ACALL   BUSY_TONE_D05S
+                            ACALL   BUSY_TONE_SOUND
+                            ACALL   BUSY_TONE_D05S
+                            ACALL   BUSY_TONE_SOUND
+                            ACALL   BUSY_TONE_D05S
 
-							MOV     R6,     #126
-							MOV     R5,     #193
-							ACALL   SOUND
-							ACALL 	D05S
+                            POP     PSW
+                            POP     DPH
+                            POP     DPL
+                            POP     B
+                            POP     ACC
+                            RETI
 
-							POP     02
-							POP     07
-							POP     06
-							POP     P0
-							RETI
+BUSY_TONE_SOUND:            CLR     P3.6
+                            ACALL   BUSY_TONE_DELAY
+                            SETB    P2.6
+                            ACALL   BUSY_TONE_DELAY
+                            DJNZ    R5,     BUSY_TONE_SOUND
+                            RET
 
-SOUND:  					CLR     P2.6
-							ACALL   DELLY
-							SETB    P2.6
-							ACALL   DELLY
-							DJNZ    R5,     SOUND
-							RET
+BUSY_TONE_DELAY:            MOV     B,      R6
+BUSY_TONE_DL:               MOV     R7,     #6
+                            DJNZ    R7,     $
+                            DJNZ    R6,     BUSY_TONE_DL
+                            MOV     R6,     B
+                            RET
 
-DELLY:  					MOV     B,      R2
-DL:     					MOV     R1,     #6
-							DJNZ    R1,     $
-							DJNZ    R2,     DL
-							MOV     R2,     B
-							RET
-
-D05S:  		 				MOV     R2, 	#5
-DL1:    					MOV     R3, 	#250
-DL2:    					MOV     R4, 	#200
-DL3:    					DJNZ    R4,	 	DL3
-							DJNZ    R3, 	DL2
-							DJNZ    R2, 	DL1
-							RET
+BUSY_TONE_D05S:             MOV     R5,     #5
+BUSY_TONE_DL1:              MOV     R6,     #250
+BUSY_TONE_DL2:              MOV     R7,     #200
+BUSY_TONE_DL3:              DJNZ    R7,     BUSY_TONE_DL3
+                            DJNZ    R6,     BUSY_TONE_DL2
+                            DJNZ    R5,     BUSY_TONE_DL1
+                            RET
 
 ; IT1 中斷
 IT1_ISR:                    
