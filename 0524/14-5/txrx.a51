@@ -10,16 +10,16 @@ RECEV:  MOV     A,      SBUF
         JNB     ACC.2,   CASE7
         JNB     ACC.3,   CASE8
         AJMP    OK
-CASE5:  CLR     P1.0
+CASE5:  CLR     P0.0
         MOV     SBUF,   P0
         AJMP    OK
-CASE6:  CLR     P1.0
+CASE6:  CLR     P0.0
         MOV     SBUF,   P0
         AJMP    OK
-CASE7:  CLR     P1.1
+CASE7:  CLR     P0.1
         MOV     SBUF,   P0
         AJMP    OK
-CASE8:  CLR     P1.1
+CASE8:  CLR     P0.1
         MOV     SBUF,   P0
         AJMP    OK
 NON:    CLR,    TI
@@ -32,19 +32,19 @@ MAIN:   MOV     TMOD,   #01110000B
         SETB    ES
         SETB    EA
 
-LOOP:   JNB     p2.0,   CASE1
-        JNB     p2.1,   CASE2
-        JNB     p2.2,   CASE3
-        JNB     p2.3,   CASE4
+LOOP:   JNB     P1.0,   CASE1
+        JNB     P1.1,   CASE2
+        JNB     P1.2,   CASE3
+        JNB     P1.3,   CASE4
         AJMP    LOOP
 
-CASE1:  CLR     P1.0
+CASE1:  CLR     P0.0
         AJMP    TRANS
-CASE2:  CLR     P1.0
+CASE2:  CLR     P0.0
         AJMP    TRANS
-CASE3:  CLR     P1.1
+CASE3:  CLR     P0.1
         AJMP    TRANS
-CASE4:  SETB    P1.1
+CASE4:  SETB    P0.1
 
 TRANS:  MOV     SBUF,   P0
 WAIT:   CALL    DELAY

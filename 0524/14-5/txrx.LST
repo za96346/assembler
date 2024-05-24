@@ -12,16 +12,16 @@ Intel-8051 Macro Assembler - Version 1.00
      10    0030     30 E2 13                      JNB     ACC.2,   CASE7
      11    0033     30 E3 17                      JNB     ACC.3,   CASE8
      12    0036     01 56                         AJMP    OK
-     13    0038     C2 90                 CASE5:  CLR     P1.0
+     13    0038     C2 80                 CASE5:  CLR     P0.0
      14    003A     85 80 99                      MOV     SBUF,   P0
      15    003D     01 56                         AJMP    OK
-     16    003F     C2 90                 CASE6:  CLR     P1.0
+     16    003F     C2 80                 CASE6:  CLR     P0.0
      17    0041     85 80 99                      MOV     SBUF,   P0
      18    0044     01 56                         AJMP    OK
-     19    0046     C2 91                 CASE7:  CLR     P1.1
+     19    0046     C2 81                 CASE7:  CLR     P0.1
      20    0048     85 80 99                      MOV     SBUF,   P0
      21    004B     01 56                         AJMP    OK
-     22    004D     C2 91                 CASE8:  CLR     P1.1
+     22    004D     C2 81                 CASE8:  CLR     P0.1
      23    004F     85 80 99                      MOV     SBUF,   P0
      24    0052     01 56                         AJMP    OK
      25    0054     C2 99                 NON:    CLR,    TI
@@ -34,19 +34,19 @@ Intel-8051 Macro Assembler - Version 1.00
      32    005E     D2 AC                         SETB    ES
      33    0060     D2 AF                         SETB    EA
      34    0062                           
-     35    0062     30 A0 0B              LOOP:   JNB     p2.0,   CASE1
-     36    0065     30 A1 0C                      JNB     p2.1,   CASE2
-     37    0068     30 A2 0D                      JNB     p2.2,   CASE3
-     38    006B     30 A3 0E                      JNB     p2.3,   CASE4
+     35    0062     30 90 0B              LOOP:   JNB     P1.0,   CASE1
+     36    0065     30 91 0C                      JNB     P1.1,   CASE2
+     37    0068     30 92 0D                      JNB     P1.2,   CASE3
+     38    006B     30 93 0E                      JNB     P1.3,   CASE4
      39    006E     01 62                         AJMP    LOOP
      40    0070                           
-     41    0070     C2 90                 CASE1:  CLR     P1.0
+     41    0070     C2 80                 CASE1:  CLR     P0.0
      42    0072     01 7E                         AJMP    TRANS
-     43    0074     C2 90                 CASE2:  CLR     P1.0
+     43    0074     C2 80                 CASE2:  CLR     P0.0
      44    0076     01 7E                         AJMP    TRANS
-     45    0078     C2 91                 CASE3:  CLR     P1.1
+     45    0078     C2 81                 CASE3:  CLR     P0.1
      46    007A     01 7E                         AJMP    TRANS
-     47    007C     D2 91                 CASE4:  SETB    P1.1
+     47    007C     D2 81                 CASE4:  SETB    P0.1
      48    007E                           
      49    007E     85 80 99              TRANS:  MOV     SBUF,   P0
      50    0081     12 00 8B              WAIT:   CALL    DELAY
