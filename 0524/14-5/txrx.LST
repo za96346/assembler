@@ -34,10 +34,10 @@ Intel-8051 Macro Assembler - Version 1.00
      32    005E     D2 AC                         SETB    ES
      33    0060     D2 AF                         SETB    EA
      34    0062                           
-     35    0062     30 90 0B              LOOP:   JNB     p1.0,   CASE1
-     36    0065     30 91 0C                      JNB     p1.1,   CASE2
-     37    0068     30 92 0D                      JNB     p1.2,   CASE3
-     38    006B     30 93 0E                      JNB     p1.3,   CASE4
+     35    0062     30 A0 0B              LOOP:   JNB     p2.0,   CASE1
+     36    0065     30 A1 0C                      JNB     p2.1,   CASE2
+     37    0068     30 A2 0D                      JNB     p2.2,   CASE3
+     38    006B     30 A3 0E                      JNB     p2.3,   CASE4
      39    006E     01 62                         AJMP    LOOP
      40    0070                           
      41    0070     C2 90                 CASE1:  CLR     P1.0
