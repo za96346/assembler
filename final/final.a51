@@ -42,6 +42,7 @@ DOH:    MOV   R6, #63
         AJMP  OUTPUT
 
 OUTPUT: CLR P2.6
+        ACALL START
         ACALL DELAY
         SETB P2.6
         ACALL DELAY
@@ -54,6 +55,32 @@ DL:     MOV R7, #6
         MOV  R6, B
         RET
 ;
+
+
+;;;  matrix light
+START:  
+    MOV DPTR, #TABLE8      ; 將 DPTR 指向 TABLE8
+    ACALL DISPLAY_TABLE    ; 呼叫顯示表格子程式
+    AJMP START             ; 無限循環，重新開始
+
+DISPLAY_TABLE:
+    MOV R2, #8             ; 假設 TABLE8 有 8 行
+DISPLAY_LOOP:
+    MOVC A, @A+DPTR
+    MOV P1, A
+    INC DPTR
+    ACALL DELAY
+    DJNZ R2, DISPLAY_LOOP
+    RET
+
+DELAY:
+    MOV R6, #50            ; 延遲值
+DELAY_LOOP:
+    MOV R7, #200
+DELAY_INNER_LOOP:
+    DJNZ R7, DELAY_INNER_LOOP
+    DJNZ R6, DELAY_LOOP
+    RET
 TABLE:  DB      10011111B
         DB      10011111B
         DB      11001111B
@@ -62,12 +89,3 @@ TABLE:  DB      10011111B
         DB      11001011B
         DB      11011101B
         DB      10011001B
-; 2
-        DB      10011111B
-        DB      10011111B
-        DB      11001111B
-        DB      10000011B
-        DB      10100101B
-        DB      11001011B
-        DB      10011101B
-        DB      10111101B
