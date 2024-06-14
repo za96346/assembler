@@ -1,4 +1,4 @@
-ORG     0000H
+    ORG     0000H
 TEST:   MOV P1, #11111110B
         JNB P2.0, SOL
         JNB P2.1, LAL
@@ -43,12 +43,12 @@ DOH:    MOV   R6, #63
 
 OUTPUT: CLR P2.6
         ACALL START
-        ACALL DELAY
+        ACALL DELAY2
         SETB P2.6
-        ACALL DELAY
+        ACALL DELAY2
         AJMP TEST
 
-DELAY:  MOV B, R6
+DELAY2:  MOV B, R6
 DL:     MOV R7, #6
         DJNZ R7, $
         DJNZ R6, DL
